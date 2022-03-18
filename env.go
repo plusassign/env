@@ -1,11 +1,11 @@
 package env
 
 import (
-	"reflect"
-	"strings"
-	"strconv"
-	"os"
 	"fmt"
+	"os"
+	"reflect"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -13,6 +13,7 @@ var (
 	defaultSep = "_"
 )
 var env *Env
+
 type Env struct {
 	ignorePrefix bool
 }
@@ -33,9 +34,9 @@ func Fill(v interface{}) error {
 	return env.Fill(v)
 }
 
-func (e *Env)Fill(v interface{}) error {
+func (e *Env) Fill(v interface{}) error {
 	ind := reflect.Indirect(reflect.ValueOf(v))
-	if reflect.ValueOf(v).Kind() != reflect.Ptr || ind.Kind() != reflect.Struct{
+	if reflect.ValueOf(v).Kind() != reflect.Ptr || ind.Kind() != reflect.Struct {
 		return fmt.Errorf("only the pointer to a struct is supported")
 	}
 
@@ -181,6 +182,7 @@ func parse(prefix string, f reflect.Value, sf reflect.StructField) error {
 				}
 				t[i] = int(val)
 			}
+			f.Set(reflect.ValueOf(t))
 		case reflect.TypeOf([]int64{}):
 			t := make([]int64, len(vals))
 			for i, v := range vals {
@@ -190,6 +192,7 @@ func parse(prefix string, f reflect.Value, sf reflect.StructField) error {
 				}
 				t[i] = val
 			}
+			f.Set(reflect.ValueOf(t))
 		case reflect.TypeOf([]uint{}):
 			t := make([]uint, len(vals))
 			for i, v := range vals {
@@ -199,6 +202,7 @@ func parse(prefix string, f reflect.Value, sf reflect.StructField) error {
 				}
 				t[i] = uint(val)
 			}
+			f.Set(reflect.ValueOf(t))
 		case reflect.TypeOf([]uint64{}):
 			t := make([]uint64, len(vals))
 			for i, v := range vals {
@@ -208,6 +212,7 @@ func parse(prefix string, f reflect.Value, sf reflect.StructField) error {
 				}
 				t[i] = val
 			}
+			f.Set(reflect.ValueOf(t))
 		case reflect.TypeOf([]float32{}):
 			t := make([]float32, len(vals))
 			for i, v := range vals {
@@ -217,6 +222,7 @@ func parse(prefix string, f reflect.Value, sf reflect.StructField) error {
 				}
 				t[i] = float32(val)
 			}
+			f.Set(reflect.ValueOf(t))
 		case reflect.TypeOf([]float64{}):
 			t := make([]float64, len(vals))
 			for i, v := range vals {
@@ -226,6 +232,7 @@ func parse(prefix string, f reflect.Value, sf reflect.StructField) error {
 				}
 				t[i] = val
 			}
+			f.Set(reflect.ValueOf(t))
 		case reflect.TypeOf([]bool{}):
 			t := make([]bool, len(vals))
 			for i, v := range vals {
@@ -235,6 +242,7 @@ func parse(prefix string, f reflect.Value, sf reflect.StructField) error {
 				}
 				t[i] = val
 			}
+			f.Set(reflect.ValueOf(t))
 		}
 	}
 	return nil
